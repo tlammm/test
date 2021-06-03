@@ -1,30 +1,31 @@
 const express = require("express");
 const app = express();
-const PORT = 8797;
-const cors = require("cors");
-app.use(cors());
 const mongoose = require("mongoose");
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const PORT = 5000;
+const { MONGOURI } = require("./keys");
 
-const Cafe = require("./cafeManage");
-
-var mongoDB = "mongodb://localhost:27017/cactus";
-mongoose.connect(mongoDB, function (err) {
-  if (err) throw err;
-  console.log("connect to MongoDB successfully");
+mongoose.connect(MONGOURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
 
-mongoose.Promise = global.Promise;
+mongoose.connection.on("connected", () => {
+  console.log("connected to mongo!");
+});
 
-var db = mongoose.connection;
+mongoose.connection.on("error", (err) => {
+  console.log("error connecting", err);
+});
 
-app.use("/cafe", Cafe);
+require("./models/user");
+require("./models/post");
+require("./models/cafe");
 
-db.on("error", console.error.bind(console, "Mongo connection error:"));
+app.use(express.json());
+app.use(require("./routes/auth"));
+app.use(require("./routes/post"));
+app.use(require("./routes/cafeManage"));
 
 app.listen(PORT, () => {
-  console.log("Server listening on port" + PORT);
+  console.log("Server is running on ", PORT);
 });
-
-module.exports = app;
