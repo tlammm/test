@@ -1,0 +1,59 @@
+.navbar {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 1px;
+  width: 100%;
+  background-color: rgb(241, 241, 241);
+  position: sticky;
+  z-index: 1000;
+  top: 0;
+}
+.navLogo {
+  display: flex;
+  margin-right: 20px;
+}
+.navPages {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.navPages > .navPage {
+  padding: 5px 20px;
+  cursor: pointer;
+}
+
+.noborder {
+  border: none;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  background: white;
+  width: 120px;
+  height: 90px;
+  border-radius: 5px;
+  box-shadow: 1px 1px gray;
+}
+
+.menuBtn {
+  border: none;
+  width: 120px;
+  height: 30px;
+  background: white;
+  padding-left: 0px;
+}
+.menuBtn:hover {
+  background: gray;
+}
+.userProfile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.userProfile > p {
+  margin-left: 5px;
+}

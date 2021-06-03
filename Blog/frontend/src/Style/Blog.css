@@ -1,0 +1,54 @@
+.blog {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 600px;
+  margin: auto;
+  padding-left: 30%;
+  padding-right: 30%;
+}
+.question {
+  width: 600px;
+  background-color: rgb(241, 241, 241);
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.questionProfile {
+  display: flex;
+  flex-direction: row;
+  font-size: smaller;
+}
+.questionProfile > small {
+  font-weight: lighter;
+}
+.questionStats {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 70px;
+  align-items: center;
+}
+.likes {
+  height: 70px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.likes > p {
+  font-size: 15px;
+}
+
+.likes:hover {
+  color: red;
+}
+.comments:hover {
+  color: blue;
+}
+.questionInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}

@@ -1,0 +1,12 @@
+.App {
+  margin: 0;
+  background-color: white;
+  height: auto;
+  width: auto;
+}
+.home {
+  display: flex;
+  margin-top: 30px;
+  flex-direction: row;
+  justify-content: space-between;
+}

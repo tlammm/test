@@ -1,0 +1,10 @@
+.leftbar {
+  display: flex;
+  flex-direction: column;
+  margin-left: 50px;
+  height: 600px;
+  width: 15%;
+  background-color: rgb(241, 241, 241);
+  position: fixed;
+  left: 0;
+}
