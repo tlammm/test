@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import "./Style/App.css";
+import Blog from "./Component/Blog";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Navbar from "./Component/Navbar";
+import SignUp from "./Component/SignUp";
+import SignIn from "./Component/SignIn";
+import axios from "axios";
+import Rightbar from "./Component/Rightbar";
+import Leftbar from "./Component/Leftbar";
+import Profile from "./Component/Profile";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Navbar />
+      <Switch>
+        <Route path="/signup">
+          <SignUp />
+        </Route>
+        <Route path="/signin">
+          <SignIn />
+        </Route>
+        <Route exact path="/">
+          <div className="home">
+            <Leftbar />
+            <Blog />
+            <Rightbar />
+          </div>
+        </Route>
+      </Switch>
+      <Route path="/profile">
+        <Profile />
+      </Route>
+    </Router>
   );
 }
 
