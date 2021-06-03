@@ -21,7 +21,7 @@ function Navbar({ image, auth_status, username }) {
   return (
     <div className="navbar">
       <div className="navLogo">
-        <h1>CACTUS</h1>
+        <h1 onClick={goToBlog}>CACTUS</h1>
       </div>
       <div className="navPages">
         <div className="navPage" onClick={goToBlog}>
