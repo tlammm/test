@@ -1,0 +1,29 @@
+.MuiContainer-root {
+  padding-top: 5vh;
+  display: flex !important;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.search {
+  width: 17vw;
+  text-align: center;
+  background-color: grey;
+}
+
+.cafe {
+  width: 50vw;
+  margin-left: 1vw;
+  background-color: grey;
+}
+
+.image {
+  width: 20vw;
+  /* background-color: grey; */
+  justify-content: center;
+}
+
+.image img {
+  width: 20vw;
+  height: auto;
+}

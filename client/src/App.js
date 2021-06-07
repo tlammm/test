@@ -9,12 +9,16 @@ import axios from "axios";
 import Rightbar from "./Component/Rightbar";
 import Leftbar from "./Component/Leftbar";
 import Profile from "./Component/Profile";
+import Venue from "./Component/Venue";
 
 function App() {
   return (
     <Router>
       <Navbar />
       <Switch>
+        <Route path="/venue">
+          <Venue />
+        </Route>
         <Route path="/signup">
           <SignUp />
         </Route>

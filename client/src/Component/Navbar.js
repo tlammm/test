@@ -12,6 +12,10 @@ function Navbar({ image, auth_status, username }) {
     history.push("/");
   };
 
+  const goToVenue = () => {
+    history.push("/venue");
+  }
+
   const Logout = async () => {
     localStorage.clear();
 
@@ -28,7 +32,7 @@ function Navbar({ image, auth_status, username }) {
           Blog
         </div>
         <div className="navPage">Stats</div>
-        <div className="navPage">Venue</div>
+        <div className="navPage" onClick={goToVenue}>Venue</div>
       </div>
       <div className="navLogin">
         {!auth_status ? (
