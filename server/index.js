@@ -19,7 +19,6 @@ mongoose.connection.on("error", (err) => {
 
 require("./models/user");
 require("./models/post");
-require("./models/cafe");
 
 app.use(express.json());
 app.use(require("./routes/auth"));

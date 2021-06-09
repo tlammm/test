@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Cafe = require("../models/cafe");
 
-router.get("/", (req, res) => {
+router.get("/cafe", (req, res) => {
   // res.send("hung");
   return Cafe.find().exec((err, cafes) => {
     if (err) throw err;
@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
   });
 });
 
-router.post("/", (req, res) => {
+router.post("/cafe", (req, res) => {
   let cafeTmp = new Cafe(req.body);
   cafeTmp.save((err) => {
     if (err) throw err;
@@ -19,7 +19,7 @@ router.post("/", (req, res) => {
   res.json(cafeTmp);
 });
 
-router.put("/", (req, res) => {
+router.put("/cafe", (req, res) => {
   if (!req.body.id) {
     res.status(400).send({ message: "Can not find your id" });
   }
@@ -31,14 +31,14 @@ router.put("/", (req, res) => {
   });
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/cafe/:id", (req, res) => {
   if (!req.params.id) {
     res.status(400).send({ message: "Can not find your id" });
   }
   let id = { _id: req.params.id };
   Cafe.findByIdAndDelete(id, function (error, result) {
     if (error) throw error;
-    else res.json({ message: id + "deleted successfully" });
+    else res.json({ message: "deleted successfully" });
   });
 });
 
