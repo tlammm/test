@@ -3,12 +3,22 @@ const router = express.Router();
 const Cafe = require("../models/cafe");
 
 router.get("/cafe", (req, res) => {
-  // res.send("hung");
-  return Cafe.find().exec((err, cafes) => {
-    if (err) throw err;
+  let cafePerPage = 10;
+  let page = req.params.page || 1;
+  Cafe.find().skip((cafePerPage * page) - cafePerPage).limit(cafePerPage).exec((err, cafes) => {
+    if(err) throw err;
     res.json(cafes);
-  });
+  })
 });
+
+router.get("/cafe/:page", (req, res) => {
+  let cafePerPage = 10;
+  let page = req.params.page || 1;
+  Cafe.find().skip((cafePerPage * page) - cafePerPage).limit(cafePerPage).exec((err, cafes) => {
+    if(err) throw err;
+    res.json(cafes);
+  })
+})
 
 router.post("/cafe", (req, res) => {
   let cafeTmp = new Cafe(req.body);
