@@ -10,7 +10,7 @@ import Leftbar from "./Component/Leftbar";
 import Profile from "./Component/Profile";
 import UserProfile from "./Component/UserProfile";
 import { reducer, initialState } from "./reducers/userReducer";
-
+import Venue from "./Component/Venue";
 export const UserContext = createContext();
 
 const Routing = () => {
@@ -24,18 +24,12 @@ const Routing = () => {
 
   return (
     <Switch>
-      <Route path="/signup">
+      {/* <Route path="/signup">
         <SignUp />
       </Route>
       <Route path="/signin">
         <SignIn />
-      </Route>
-      <Route exact path="/profile">
-        <Profile />
-      </Route>
-      <Route path="/profile/:userid">
-        <UserProfile />
-      </Route>
+      </Route> */}
       <Route exact path="/">
         <div className="home">
           <Leftbar />
@@ -43,6 +37,34 @@ const Routing = () => {
           <Rightbar />
         </div>
       </Route>
+      {/* <Route path="/venue">
+        <Venue />
+      </Route> */}
+      <Route path="/signup">
+        <SignUp />
+      </Route>
+      <Route path="/signin">
+        <SignIn />
+      </Route>
+
+      <Route exact path="/profile">
+        <Profile />
+      </Route>
+      <Route path="/profile/:userid">
+        <UserProfile />
+      </Route>
+
+      {/* <Route path="/profile">
+        <Profile />
+      </Route> */}
+
+      {/* <Route exact path="/">
+        <div className="home">
+          <Leftbar />
+          <Blog />
+          <Rightbar />
+        </div>
+      </Route> */}
     </Switch>
   );
 };

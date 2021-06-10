@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import "../Style/Navbar.css";
 import { useHistory } from "react-router-dom";
 import { Avatar, Button } from "@material-ui/core";
-import axios from "axios";
 
 import { UserContext } from "../App";
 
@@ -48,7 +47,11 @@ function Navbar() {
     history.push("/");
   };
 
-  const Logout = () => {
+  // const goToVenue = () => {
+  //   history.push("/venue");
+  // };
+
+  const Logout = async () => {
     localStorage.clear();
     dispatch({ type: "CLEAR" });
   };
@@ -63,7 +66,12 @@ function Navbar() {
           Blog
         </div>
         <div className="navPage">Stats</div>
-        <div className="navPage">Venue</div>
+        <div
+          className="navPage"
+          //  onClick={goToVenue}
+        >
+          Venue
+        </div>
       </div>
       <div className="navLogin">{render()}</div>
     </div>
