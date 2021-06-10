@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const mongoose = require("mongoose");
 const PORT = 5000;
@@ -22,8 +23,10 @@ require("./models/post");
 require("./models/cafe");
 
 app.use(express.json());
+app.use(cors());
 app.use(require("./routes/auth"));
 app.use(require("./routes/post"));
+app.use(require("./routes/user"));
 app.use(require("./routes/cafeManage"));
 
 app.listen(PORT, () => {

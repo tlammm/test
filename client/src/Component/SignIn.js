@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../App";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -9,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import "../Style/SignUp.css";
+import M from "materialize-css";
 import axios from "axios";
 
 function Copyright() {
@@ -45,8 +47,58 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
+  const { state, dispatch } = useContext(UserContext);
   const classes = useStyles();
   const history = useHistory();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const SignIn = () => {
+    const data = {
+      username: username,
+      password: password,
+    };
+    axios
+      .post("http://localhost:5000/signin", data)
+      .then((res) => {
+        if (res.data.error) {
+          M.toast({ html: res.data.error, classes: "red" });
+        } else {
+          localStorage.setItem("jwt", res.data.token);
+          localStorage.setItem("user", JSON.stringify(res.data.user));
+          dispatch({ type: "USER", payload: res.data.user });
+          M.toast({ html: "Signed in successfully", classes: "green" });
+          history.push("/");
+        }
+      })
+      .catch((err) => console.log(err));
+    // fetch("http://localhost:5000/signin", {
+    //   method: "post",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     password,
+    //     email,
+    //   }),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //     if (data.error) {
+    //       M.toast({ html: data.error, classes: "red" });
+    //     } else {
+    //       localStorage.setItem("jwt", data.token);
+    //       localStorage.setItem("user", JSON.stringify(data.user));
+    //       dispatch({ type: "USER", payload: data.user });
+    //       M.toast({ html: "Signed in successfully", classes: "green" });
+    //       history.push("/");
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+  };
 
   return (
     <div className="signup">
@@ -57,16 +109,24 @@ export default function SignUp() {
             <Typography component="h1" variant="h5">
               Sign In
             </Typography>
-            <form className={classes.form} noValidate>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                SignIn();
+              }}
+              className={classes.form}
+              noValidate
+            >
               <TextField
                 variant="outlined"
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="Email"
-                name="email"
+                id="username"
+                label="Username"
+                name="username"
                 autoFocus
+                onChange={(e) => setUsername(e.target.value)}
               />
               <TextField
                 variant="outlined"
@@ -77,13 +137,14 @@ export default function SignUp() {
                 label="Password"
                 type="password"
                 id="password"
+                onChange={(e) => setPassword(e.target.value)}
               />
 
               <Button
-                type="submit"
                 fullWidth
                 variant="contained"
                 color="primary"
+                type="submit"
                 className={classes.submit}
               >
                 Sign In

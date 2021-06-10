@@ -1,21 +1,56 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../Style/Navbar.css";
 import { useHistory } from "react-router-dom";
-import { Avatar } from "@material-ui/core";
-import { Dropdown } from "react-bootstrap";
+import { Avatar, Button } from "@material-ui/core";
 import axios from "axios";
 
-function Navbar({ image, auth_status, username }) {
+import { UserContext } from "../App";
+
+function Navbar() {
   const history = useHistory();
+  const { state, dispatch } = useContext(UserContext);
+  const render = () => {
+    if (state) {
+      return (
+        <div className="userNav">
+          <p
+            style={{ cursor: "pointer", marginRight: "10px" }}
+            onClick={() => {
+              history.push("/profile");
+            }}
+          >
+            {state.username}
+          </p>
+
+          <Button
+            variant="contained"
+            style={{ backgroundColor: "red", color: "white" }}
+            onClick={() => Logout()}
+          >
+            Logout
+          </Button>
+        </div>
+      );
+    } else {
+      return (
+        <button
+          onClick={() => {
+            history.push("/signin");
+          }}
+        >
+          Sign in
+        </button>
+      );
+    }
+  };
 
   const goToBlog = () => {
     history.push("/");
   };
 
-  const Logout = async () => {
+  const Logout = () => {
     localStorage.clear();
-
-    history.push("/user-signin");
+    dispatch({ type: "CLEAR" });
   };
 
   return (
@@ -30,19 +65,7 @@ function Navbar({ image, auth_status, username }) {
         <div className="navPage">Stats</div>
         <div className="navPage">Venue</div>
       </div>
-      <div className="navLogin">
-        {!auth_status ? (
-          <button
-            onClick={() => {
-              history.push("/signin");
-            }}
-          >
-            Login
-          </button>
-        ) : (
-          <div className="userProfile">Hey</div>
-        )}
-      </div>
+      <div className="navLogin">{render()}</div>
     </div>
   );
 }
