@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema({
     default:
       "https://res.cloudinary.com/dxeac7lyn/image/upload/v1623320666/default-avatar_k0rgwd.png",
   },
+  role: {
+    type: String,
+    default: "user",
+  },
 });
 
 mongoose.model("User", userSchema);

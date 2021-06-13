@@ -5,12 +5,13 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navbar from "./Component/Navbar";
 import SignUp from "./Component/SignUp";
 import SignIn from "./Component/SignIn";
+import ForgetPassword from "./Component/ForgetPassword";
 import Rightbar from "./Component/Rightbar";
 import Leftbar from "./Component/Leftbar";
 import Profile from "./Component/Profile";
 import UserProfile from "./Component/UserProfile";
 import { reducer, initialState } from "./reducers/userReducer";
-import Venue from "./Component/Venue";
+import Admin from "./Component/Admin";
 export const UserContext = createContext();
 
 const Routing = () => {
@@ -21,6 +22,7 @@ const Routing = () => {
       dispatch({ type: "USER", payload: user });
     }
   }, []);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   return (
     <Switch>
@@ -41,14 +43,49 @@ const Routing = () => {
         <Venue />
       </Route> */}
       <Route path="/signup">
-        <SignUp />
+        {!state ? (
+          <SignUp />
+        ) : (
+          <div className="home">
+            <Leftbar />
+            <Blog />
+            <Rightbar />
+          </div>
+        )}
       </Route>
       <Route path="/signin">
-        <SignIn />
+        {!state ? (
+          <SignIn />
+        ) : (
+          <div className="home">
+            <Leftbar />
+            <Blog />
+            <Rightbar />
+          </div>
+        )}
       </Route>
-
+      <Route path="/admin">
+        {!user ? (
+          <div className="home">
+            <Leftbar />
+            <Blog />
+            <Rightbar />
+          </div>
+        ) : user.role === "admin" ? (
+          <Admin />
+        ) : (
+          <div className="home">
+            <Leftbar />
+            <Blog />
+            <Rightbar />
+          </div>
+        )}
+      </Route>
       <Route exact path="/profile">
         <Profile />
+      </Route>
+      <Route path="/changepassword">
+        {state ? <ForgetPassword /> : <SignIn />}
       </Route>
       <Route path="/profile/:userid">
         <UserProfile />

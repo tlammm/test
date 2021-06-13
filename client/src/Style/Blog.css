@@ -1,6 +1,6 @@
 .blog {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   align-items: center;
   width: 30%;
   margin: auto;

@@ -85,3 +85,11 @@
 .active-content {
   display: block;
 }
+.profileBtn {
+  display: flex;
+  flex-direction: row;
+}
+.profilePic {
+  display: flex;
+  flex-direction: column;
+}

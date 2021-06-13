@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../keys");
 
 router.post("/signup", (req, res) => {
-  const { username, password, confirmPassword, pic } = req.body;
+  const { username, password, confirmPassword, pic, role } = req.body;
   if (!username || !password || !confirmPassword) {
     return res.json({ error: "Please add all the fields" });
   }
@@ -29,6 +29,7 @@ router.post("/signup", (req, res) => {
           username,
           password: hashedpassword,
           pic: pic,
+          role,
         });
         user
           .save()
@@ -61,8 +62,8 @@ router.post("/signin", (req, res) => {
         if (doMatch) {
           //   res.json({ message: "Signed in Successfully!" });
           const token = jwt.sign({ _id: savedUser._id }, JWT_SECRET);
-          const { _id, username, pic } = savedUser;
-          res.json({ token, user: { _id, username, pic } });
+          const { _id, username, pic, role } = savedUser;
+          res.json({ token, user: { _id, username, pic, role } });
         } else {
           res.json({ error: "Invalid username or password!" });
         }

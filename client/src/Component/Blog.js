@@ -186,7 +186,11 @@ const Blog = () => {
 
                 <h4>
                   <Link
-                    style={{ textDecoration: "none", color: "black" }}
+                    style={{
+                      textDecoration: "none",
+                      color: "black",
+                      fontWeight: "normal",
+                    }}
                     to={
                       state
                         ? item.postedBy._id !== state._id

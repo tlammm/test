@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const requireLogin = require("../middleware/requireLogin");
 const Post = mongoose.model("Post");
 const User = mongoose.model("User");
+const bcrypt = require("bcryptjs");
 
 router.get("/user/:id", requireLogin, (req, res) => {
   User.findOne({ _id: req.params.id })
@@ -11,6 +12,7 @@ router.get("/user/:id", requireLogin, (req, res) => {
     .then((user) => {
       Post.find({ postedBy: req.params.id })
         .populate("postedBy", "_id username")
+        .populate("comments.postedBy", "_id username pic")
         .exec((err, posts) => {
           if (err) {
             return res.json({ error: err });
@@ -21,6 +23,31 @@ router.get("/user/:id", requireLogin, (req, res) => {
     .catch((err) => {
       return res.json({ error: "User not found" });
     });
+});
+
+router.put("/changepic", requireLogin, (req, res) => {
+  User.findByIdAndUpdate(
+    req.user._id,
+    { $set: { pic: req.body.pic } },
+    { new: true },
+    (err, result) => {
+      if (err) {
+        return res.json({ error: "Pic cannot be changed" });
+      }
+      res.json(result);
+    }
+  );
+});
+
+router.put("/changepassword", requireLogin, async (req, res) => {
+  console.log("change password");
+  try {
+    const password = await bcrypt.hash(req.body.password, 12);
+    User.findByIdAndUpdate(req.user._id, { password: password }, { new: true });
+    return res.json({ data: "Password has been changed!" });
+  } catch (error) {
+    return res.json({ error: "Error occured" });
+  }
 });
 
 module.exports = router;
