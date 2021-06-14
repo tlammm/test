@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     width: "40%",
     backgroundColor: theme.palette.background.paper,
-    // border: "2px solid #000",
+    border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
@@ -71,7 +71,7 @@ function Rightbar() {
         transform: `translate(-50%, -35%)`,
       }}
     >
-      <h2>Ask Question</h2>
+      <h5>Ask Question</h5>
       <div className="modalInfo">
         <Avatar className="avatar" src={user.pic} />
         <p>{user.username} asks:</p>
@@ -116,7 +116,6 @@ function Rightbar() {
             BackdropProps={{
               timeout: 500,
             }}
-            disableBackdropClick={true}
           >
             <Fade in={openModal}>{bodyContent}</Fade>
           </Modal>

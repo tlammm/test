@@ -189,4 +189,26 @@ router.delete("/deletepost/:postId", requireLogin, (req, res) => {
       }
     });
 });
+router.post("/search", (req, res) => {
+  Post.findOne({ title: req.body.query })
+    .select("title _id")
+    .then((post) => {
+      res.json({ post: post });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.get("/searchtitle/:title", (req, res) => {
+  Post.find({ title: { $in: req.params.title } })
+    .populate("postedBy", "_id username pic")
+    .populate("comments.postedBy", "_id username pic")
+    .then((posts) => {
+      res.json({ posts });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 module.exports = router;

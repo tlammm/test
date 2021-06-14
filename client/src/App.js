@@ -10,8 +10,10 @@ import Rightbar from "./Component/Rightbar";
 import Leftbar from "./Component/Leftbar";
 import Profile from "./Component/Profile";
 import UserProfile from "./Component/UserProfile";
+import TestModal from "./Component/TestModal";
 import { reducer, initialState } from "./reducers/userReducer";
 import Admin from "./Component/Admin";
+import SearchPage from "./Component/SearchPage";
 export const UserContext = createContext();
 
 const Routing = () => {
@@ -83,6 +85,12 @@ const Routing = () => {
       </Route>
       <Route exact path="/profile">
         <Profile />
+      </Route>
+      <Route exact path="/searchpage/:title">
+        <div className="search">
+          <Leftbar />
+          <SearchPage />
+        </div>
       </Route>
       <Route path="/changepassword">
         {state ? <ForgetPassword /> : <SignIn />}
