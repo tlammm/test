@@ -39,7 +39,10 @@ function Profile() {
       },
     })
       .then((res) => res.json())
-      .then((result) => setData(result.mypost));
+      .then((result) => {
+        console.log(result);
+        // setData(result.mypost);
+      });
 
     fetch("http://localhost:5000/savedposts", {
       headers: {
@@ -48,7 +51,7 @@ function Profile() {
     })
       .then((res) => res.json())
       .then((result) => setSavedPosts(result.posts));
-  }, []);
+  });
   useEffect(() => {
     if (image) {
       const data = new FormData();

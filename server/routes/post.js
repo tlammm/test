@@ -212,3 +212,13 @@ router.get("/searchtitle/:title", (req, res) => {
     });
 });
 module.exports = router;
+
+router.delete("/deletepostadmin/:postId", requireLogin, (req, res) => {
+  Post.findByIdAndDelete({ _id: req.params.postId }, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(result);
+    }
+  });
+});

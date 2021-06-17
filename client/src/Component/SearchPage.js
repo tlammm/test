@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../App";
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import { useParams } from "react-router-dom";
 import {
@@ -10,7 +10,6 @@ import {
   DeleteOutline,
   FavoriteBorder,
 } from "@material-ui/icons";
-import "../Style/Blog.css";
 import M from "materialize-css";
 
 export default function SearchPage() {

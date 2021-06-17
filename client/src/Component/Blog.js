@@ -182,7 +182,7 @@ const Blog = () => {
           <div className="post" key={item._id}>
             <div className="postHeader">
               <div className="authorInfo">
-                <Avatar src={item.postedBy.pic} />
+                <Avatar src={item.postedBy?.pic} />
 
                 <h4>
                   <Link

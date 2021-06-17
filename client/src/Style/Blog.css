@@ -58,3 +58,23 @@ form > input:focus {
   align-items: center;
   justify-content: space-between;
 }
+.userComponent {
+  width: 70%;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(241, 241, 241);
+  margin: auto;
+  margin-bottom: 20px;
+  border-radius: 50px;
+}
+.user {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.username {
+  margin-left: 10px;
+}

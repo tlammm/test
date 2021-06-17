@@ -50,4 +50,26 @@ router.put("/changepassword", requireLogin, async (req, res) => {
   }
 });
 
+router.get("/allusers", (req, res) => {
+  User.find()
+    .then((users) => {
+      res.json({ users });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.delete("/deleteuser/:id", requireLogin, (req, res) => {
+  User.findByIdAndDelete({ _id: req.params.id }, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      Post.deleteMany({ postedBy: result._id }).then((result) =>
+        res.json(result)
+      );
+    }
+  });
+});
+
 module.exports = router;

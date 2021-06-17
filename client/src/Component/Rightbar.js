@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
     width: "40%",
+    height: "70%",
     backgroundColor: theme.palette.background.paper,
     // border: "2px solid #000",
     boxShadow: theme.shadows[5],
@@ -73,8 +74,8 @@ function Rightbar() {
     >
       <h2>Ask Question</h2>
       <div className="modalInfo">
-        <Avatar className="avatar" src={user.pic} />
-        <p>{user.username} asks:</p>
+        <Avatar className="avatar" src={user?.pic} />
+        <p>{user?.username} asks:</p>
       </div>
 
       <div className="modalField">
