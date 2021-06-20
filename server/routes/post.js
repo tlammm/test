@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const requireLogin = require("../middleware/requireLogin");
+const User = mongoose.model("User");
 const Post = mongoose.model("Post");
 
 router.get("/allposts", (req, res) => {
@@ -189,11 +190,12 @@ router.delete("/deletepost/:postId", requireLogin, (req, res) => {
       }
     });
 });
-router.post("/search", (req, res) => {
-  Post.findOne({ title: req.body.query })
-    .select("title _id")
-    .then((post) => {
-      res.json({ post: post });
+router.post("/searchuser", (req, res) => {
+  let userPattern = new RegExp("^" + req.body.query);
+  User.find({ username: { $regex: userPattern } })
+    .select("_id username pic")
+    .then((user) => {
+      res.json({ user });
     })
     .catch((err) => {
       console.log(err);

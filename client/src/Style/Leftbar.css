@@ -8,3 +8,14 @@
   position: fixed;
   left: 0;
 }
+.userComponents {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 50px;
+  width: 70%;
+  align-items: center;
+}
+.usernames {
+  margin-left: 10px;
+}

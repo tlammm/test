@@ -214,7 +214,9 @@ const Blog = () => {
             </div>
 
             <div className="postContent">
-              <h3>{item.title}</h3>
+              <h3>
+                <Link to={"/searchpage/" + item.title}>{item.title}</Link>
+              </h3>
               <p>{item.body}</p>
               {/* <img src={item.pic ? item.pic : null} /> */}
               {item.comments.map((record) => {

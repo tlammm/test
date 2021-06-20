@@ -175,7 +175,7 @@ export default function SearchPage() {
           className="blog"
           style={{ display: "flex", flexDirection: "column" }}
         >
-          <h2>Search Results: </h2>
+          <h2>Posts with title "{title}": </h2>
           {data.map((item) => {
             return (
               <div className="post" key={item._id}>

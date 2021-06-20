@@ -2,7 +2,11 @@ import React, { useEffect, useState, useContext } from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import InputBase from "@material-ui/core/InputBase";
 import AppBar from "@material-ui/core/AppBar";
+import IconButton from "@material-ui/core/IconButton";
+import SearchIcon from "@material-ui/icons/Search";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
@@ -61,11 +65,34 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
     marginTop: "1%",
   },
+  root2: {
+    padding: "2px 4px",
+    display: "flex",
+    alignItems: "center",
+    width: "80%",
+    height: 30,
+    background: "white",
+    margin: "auto",
+    marginBottom: "20px",
+    borderRadius: "18px",
+    border: "1px solid gray",
+  },
+  input: {
+    marginLeft: theme.spacing(1),
+    fontSize: "15px",
+    flex: 1,
+  },
+  iconButton: {
+    padding: 10,
+  },
 }));
 
 export default function FullWidthTabs() {
   const classes = useStyles();
   const theme = useTheme();
+  const [search, setSearch] = useState("");
+  const [userDetails, setUserDetails] = useState([]);
+
   const [value, setValue] = React.useState(0);
   const [data, setData] = useState([]);
   const [users, setUsers] = useState([]);
@@ -91,6 +118,23 @@ export default function FullWidthTabs() {
         setUsers(result.users);
       });
   }, []);
+
+  const fetchUsers = (query) => {
+    setSearch(query);
+    fetch("http://localhost:5000/searchuser", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setUserDetails(result.user);
+      });
+  };
   const likePost = (id) => {
     fetch("http://localhost:5000/like", {
       method: "put",
@@ -256,6 +300,51 @@ export default function FullWidthTabs() {
     setValue(index);
   };
 
+  const allUsers = () => {
+    return (
+      <div className="userList">
+        {users.map((item) => {
+          return (
+            <div className="userComponent">
+              <div className="user">
+                <Avatar
+                  src={item.pic}
+                  style={{ width: "50px", height: "50px" }}
+                />
+                <div className="username">
+                  <Link
+                    style={{
+                      textDecoration: "none",
+                      color: "black",
+                      fontWeight: "normal",
+                    }}
+                    to={
+                      state
+                        ? item?._id !== state._id
+                          ? "/profile/" + item?._id
+                          : "/profile"
+                        : "/"
+                    }
+                  >
+                    {item.username}
+                  </Link>
+                </div>
+              </div>
+              <Delete
+                style={{
+                  cursor: "pointer",
+                  marginRight: "20px",
+                  color: "gray",
+                }}
+                onClick={() => deleteUser(item._id)}
+              />
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
@@ -277,45 +366,75 @@ export default function FullWidthTabs() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <div className="userList">
-            {users.map((item) => {
-              return (
-                <div className="userComponent">
-                  <div className="user">
-                    <Avatar
-                      src={item.pic}
-                      style={{ width: "50px", height: "50px" }}
-                    />
-                    <div className="username">
-                      <Link
+          <div className="leftSearch">
+            <Paper
+              component="form"
+              className={classes.root2}
+              onSubmit={(e) => {
+                e.preventDefault();
+              }}
+            >
+              <InputBase
+                className={classes.input}
+                placeholder="Search User"
+                value={search}
+                onChange={(e) => fetchUsers(e.target.value)}
+                // inputProps={{ "aria-label": "search title" }}
+              />
+              <IconButton
+                type="submit"
+                className={classes.iconButton}
+                aria-label="search"
+              >
+                <SearchIcon />
+              </IconButton>
+            </Paper>
+          </div>
+          <div>
+            {search === "" ? (
+              allUsers()
+            ) : (
+              <div>
+                {userDetails.map((item) => {
+                  return (
+                    <div className="userComponent">
+                      <div className="user">
+                        <Avatar
+                          src={item.pic}
+                          style={{ width: "50px", height: "50px" }}
+                        />
+                        <div className="username">
+                          <Link
+                            style={{
+                              textDecoration: "none",
+                              color: "black",
+                              fontWeight: "normal",
+                            }}
+                            to={
+                              state
+                                ? item?._id !== state._id
+                                  ? "/profile/" + item?._id
+                                  : "/profile"
+                                : "/"
+                            }
+                          >
+                            {item.username}
+                          </Link>
+                        </div>
+                      </div>
+                      <Delete
                         style={{
-                          textDecoration: "none",
-                          color: "black",
-                          fontWeight: "normal",
+                          cursor: "pointer",
+                          marginRight: "20px",
+                          color: "gray",
                         }}
-                        to={
-                          state
-                            ? item?._id !== state._id
-                              ? "/profile/" + item?._id
-                              : "/profile"
-                            : "/"
-                        }
-                      >
-                        {item.username}
-                      </Link>
+                        onClick={() => deleteUser(item._id)}
+                      />
                     </div>
-                  </div>
-                  <Delete
-                    style={{
-                      cursor: "pointer",
-                      marginRight: "20px",
-                      color: "gray",
-                    }}
-                    onClick={() => deleteUser(item._id)}
-                  />
-                </div>
-              );
-            })}
+                  );
+                })}
+              </div>
+            )}
           </div>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>

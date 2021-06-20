@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import { Link, useHistory } from "react-router-dom";
+import Avatar from "@material-ui/core/Avatar";
+import { UserContext } from "../App";
 
 import "../Style/Leftbar.css";
 
@@ -31,27 +33,24 @@ const useStyles = makeStyles((theme) => ({
 
 function Leftbar() {
   const classes = useStyles();
-  const [searchValue, setSearchValue] = useState("");
-  const [titleData, setTitleData] = useState("");
-  const history = useHistory();
+  const [search, setSearch] = useState("");
+  const { state, dispatch } = useContext(UserContext);
+  const [userDetails, setUserDetails] = useState([]);
 
-  const fetchPosts = () => {
-    fetch("http://localhost:5000/search", {
+  const fetchUsers = (query) => {
+    setSearch(query);
+    fetch("http://localhost:5000/searchuser", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        query: searchValue,
+        query,
       }),
     })
       .then((res) => res.json())
       .then((result) => {
-        if (!result.post) {
-          setTitleData("No results :(");
-          return;
-        }
-        setTitleData(result.post.title);
+        setUserDetails(result.user);
       });
   };
   return (
@@ -62,14 +61,13 @@ function Leftbar() {
           className={classes.root}
           onSubmit={(e) => {
             e.preventDefault();
-            fetchPosts();
           }}
         >
           <InputBase
             className={classes.input}
-            placeholder="Search Title"
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
+            placeholder="Search User"
+            value={search}
+            onChange={(e) => fetchUsers(e.target.value)}
             // inputProps={{ "aria-label": "search title" }}
           />
           <IconButton
@@ -81,12 +79,42 @@ function Leftbar() {
           </IconButton>
         </Paper>
       </div>
-
-      <div>
-        {titleData === "No results :(" ? (
-          titleData
-        ) : (
-          <Link to={"/searchpage/" + titleData}>{titleData}</Link>
+      <div className="userLists">
+        {search === "" ? null : (
+          <div>
+            {userDetails.map((item) => {
+              return (
+                <div className="userComponents">
+                  <Avatar
+                    src={item.pic}
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      // marginLeft: "-30%",
+                    }}
+                  />
+                  <div className="usernames">
+                    <Link
+                      style={{
+                        textDecoration: "none",
+                        color: "black",
+                        fontWeight: "normal",
+                      }}
+                      to={
+                        state
+                          ? item?._id !== state._id
+                            ? "/profile/" + item?._id
+                            : "/profile"
+                          : "/"
+                      }
+                    >
+                      {item.username}
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         )}
       </div>
     </div>

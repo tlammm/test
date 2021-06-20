@@ -40,8 +40,7 @@ function Profile() {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
-        // setData(result.mypost);
+        setData(result.mypost);
       });
 
     fetch("http://localhost:5000/savedposts", {
