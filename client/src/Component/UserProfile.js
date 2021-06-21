@@ -256,35 +256,65 @@ function Profile() {
                     })}
                     <div className="postIcon">
                       <div className="likeIcon">
-                        {item.likes.includes(state._id) ? (
-                          <Favorite
-                            style={{ color: "red", marginTop: "20px" }}
-                            onClick={() => unLikePost(item._id)}
-                          />
+                        {state ? (
+                          item.likes.includes(state._id) ? (
+                            <Favorite
+                              style={{ color: "red", marginTop: "20px" }}
+                              onClick={() => unLikePost(item._id)}
+                            />
+                          ) : (
+                            <FavoriteBorder
+                              style={{
+                                color: "black",
+                                marginTop: "20px",
+                              }}
+                              onClick={() => likePost(item._id)}
+                            />
+                          )
                         ) : (
                           <FavoriteBorder
                             style={{
                               color: "black",
                               marginTop: "20px",
                             }}
-                            onClick={() => likePost(item._id)}
+                            onClick={() =>
+                              M.toast({
+                                html: "You must be signed in",
+                                classes: "red",
+                              })
+                            }
                           />
                         )}
                       </div>
 
                       <div className="saveIcon">
-                        {item.saved.includes(state._id) ? (
-                          <Bookmark
-                            style={{ color: "blue", marginTop: "20px" }}
-                            onClick={() => unSavePost(item._id)}
-                          />
+                        {state ? (
+                          item.saved.includes(state._id) ? (
+                            <Bookmark
+                              style={{ color: "blue", marginTop: "20px" }}
+                              onClick={() => unSavePost(item._id)}
+                            />
+                          ) : (
+                            <BookmarkBorder
+                              style={{
+                                color: "black",
+                                marginTop: "20px",
+                              }}
+                              onClick={() => savePost(item._id)}
+                            />
+                          )
                         ) : (
                           <BookmarkBorder
                             style={{
                               color: "black",
                               marginTop: "20px",
                             }}
-                            onClick={() => savePost(item._id)}
+                            onClick={() =>
+                              M.toast({
+                                html: "You must be signed in",
+                                classes: "red",
+                              })
+                            }
                           />
                         )}
                       </div>
@@ -313,7 +343,7 @@ function Profile() {
           </div>
         </div>
       ) : (
-        <h1>Loading...</h1>
+        <h1>test</h1>
       )}
     </>
   );

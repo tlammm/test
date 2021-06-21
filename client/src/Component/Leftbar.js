@@ -105,7 +105,7 @@ function Leftbar() {
                           ? item?._id !== state._id
                             ? "/profile/" + item?._id
                             : "/profile"
-                          : "/"
+                          : "/profile/" + item?._id
                       }
                     >
                       {item.username}

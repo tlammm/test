@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "../App";
 import "../Style/Blog.css";
 import Avatar from "@material-ui/core/Avatar";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import {
   Bookmark,

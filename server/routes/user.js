@@ -6,7 +6,7 @@ const Post = mongoose.model("Post");
 const User = mongoose.model("User");
 const bcrypt = require("bcryptjs");
 
-router.get("/user/:id", requireLogin, (req, res) => {
+router.get("/user/:id", (req, res) => {
   User.findOne({ _id: req.params.id })
     .then("-password")
     .then((user) => {

@@ -10,7 +10,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import "../Style/SignUp.css";
 import M from "materialize-css";
-import axios from "axios";
 
 function Copyright() {
   return (

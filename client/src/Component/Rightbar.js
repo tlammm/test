@@ -2,8 +2,6 @@ import React, { useState, useContext } from "react";
 import "../Style/Rightbar.css";
 import Modal from "@material-ui/core/Modal";
 import { Avatar } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
-import axios from "axios";
 import M from "materialize-css";
 import { makeStyles } from "@material-ui/core/styles";
 import { UserContext } from "../App";
@@ -28,7 +26,6 @@ function Rightbar() {
   const [body, setBody] = useState("");
   const [title, setTitle] = useState("");
   const { state, dispatch } = useContext(UserContext);
-  const history = useHistory();
   const user = JSON.parse(localStorage.getItem("user"));
 
   const AddPost = () => {
@@ -61,6 +58,14 @@ function Rightbar() {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const handleClick = () => {
+    if (state) {
+      setOpenModal(true);
+    } else {
+      M.toast({ html: "Please sign in first!", classes: "red" });
+    }
   };
 
   const bodyContent = (
@@ -106,34 +111,22 @@ function Rightbar() {
     </div>
   );
   const render = () => {
-    if (state) {
-      return (
-        <div>
-          <button onClick={() => setOpenModal(true)}>Ask Question</button>
-          <Modal
-            open={openModal}
-            onClose={() => setOpenModal(false)}
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-              timeout: 500,
-            }}
-            disableBackdropClick={true}
-          >
-            <Fade in={openModal}>{bodyContent}</Fade>
-          </Modal>
-        </div>
-      );
-    } else {
-      return (
-        <button
-          onClick={() => {
-            history.push("/signin");
+    return (
+      <div>
+        <button onClick={() => handleClick()}>Ask Question</button>
+        <Modal
+          open={openModal}
+          onClose={() => setOpenModal(false)}
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
           }}
+          disableBackdropClick={true}
         >
-          Sign In
-        </button>
-      );
-    }
+          <Fade in={openModal}>{bodyContent}</Fade>
+        </Modal>
+      </div>
+    );
   };
 
   return (
